@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MR-AWS web server TEST</title>
+    <link href="JScodes\CSSfile.css" rel="stylesheet" />
+    <script src="JScodes\aws-sdk.js">     </script>
+</head>
+<script>
+    // <script src="JScodes\aws-sdk.js">     
+//var AWS = require("aws-sdk");
+function ReadCredits(){
+    var aa = 11;
+   // AWS.config.update({region: 'ap-south-1'});
+    var jjson = {
+  "accessKeyId": "AKIAQDELQHZUP37SJP6O",
+  "secretAccessKey": "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",
+  "region": "ap-south-1"
+}
+    AWS.config.update(jjson);
+   // AWS.config.loadFromPath('./config.json');
+    AWS.config.getCredentials(function(err) {
+  if (err) console.log(err.stack);
+  // credentials not loaded
+  else {
+    console.log("Access key:" + AWS.config.credentials.accessKeyId + "Secret: " + AWS.config.credentials.secretAccessKey);
+  }
+});
+
+// Create a DynamoDB client instance
+const docClient = new AWS.DynamoDB.DocumentClient();
+
+// Define the parameters for the query
+const params = {
+  TableName: 'test2',
+  KeyConditionExpression: 'num = :pk',
+  ExpressionAttributeValues: {
+    ':pk': 1 
+  }
+
+};
+
+// Perform the query
+docClient.query(params, (err, data) => {
+  if (err) {
+    console.error('Error querying DynamoDB:', err);
+  } else {
+    console.log('Query result:', data);
+    console.log(data.Items[0].marks);
+  }
+});
+var aa = 11;
+console.log(aa);
+}
+
+</script>
+<body>
+    <h1>
+        ...MR-AWS WEB VIEW ..
+    </h1>
+    <img src="https://www.w3schools.com/images/w3schools_green.jpg" alt="W3Schools.com" style="width:104px;height:142px;">
+    <button class="button" onclick="ReadCredits()"> TEST AWS </button>
+</body>
+</html>
